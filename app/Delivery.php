@@ -13,7 +13,5 @@ class Delivery extends Model
     'delivery_address_id',
     'pickup_address_id',
     'delivery_term',
-    'receiver_id',
-    'carrier_id'
   ];
 }

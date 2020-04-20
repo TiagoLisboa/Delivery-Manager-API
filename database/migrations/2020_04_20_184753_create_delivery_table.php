@@ -13,14 +13,14 @@ class CreateDeliveryTable extends Migration
      */
     public function up()
     {
-        Schema::create('delivery', function (Blueprint $table) {
+        Schema::create('deliveries', function (Blueprint $table) {
             $table->id();
             $table->string('delivery');
             $table->foreignId('receiver_id')->onDelete('cascade');
             $table->foreignId('carrier_id')->onDelete('cascade');
             $table->foreignId('delivery_address_id')->onDelete('cascade');
             $table->foreignId('pickup_address_id')->onDelete('cascade');
-            $table->dateTime('delivery_term');
+            $table->dateTime('delivery_term')->nullable();
             $table->timestamps();
 
             $table->foreign('receiver_id')->references('id')->on('users');
@@ -35,6 +35,6 @@ class CreateDeliveryTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('delivery');
+        Schema::dropIfExists('deliveries');
     }
 }
