@@ -36,4 +36,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    function to_receive() {
+      return $this->hasMany('App\Delivery', 'receiver_id');
+    }
+
+    function to_delivery() {
+      return $this->hasMany('App\Delivery', 'carrier_id');
+    }
 }
