@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Validator;
 
 class AddressController extends Controller
 {
+    public function __construct()
+    {
+      $this->middleware('auth:api');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -56,7 +60,7 @@ class AddressController extends Controller
      * @param  \App\Address  $address
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
       return new AddressResource(
         Address::with('user')->findOrFail($id)
