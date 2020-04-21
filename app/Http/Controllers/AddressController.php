@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Address;
+use App\Http\Resources\AddressResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -15,8 +16,8 @@ class AddressController extends Controller
      */
     public function index()
     {
-      return response()->json(
-        Address::with('user')->get()
+      return AddressResource::collection(
+        Address::with('user')->paginate(25)
       );
     }
 
@@ -45,7 +46,7 @@ class AddressController extends Controller
 
       $address = Address::create($request->all());
 
-      return response()->json($address);
+      return new AddressResource($address);
 
     }
 
@@ -57,8 +58,8 @@ class AddressController extends Controller
      */
     public function show($id)
     {
-      return response()->json(
-        Address::with('user')->find($id)
+      return new AddressResource(
+        Address::with('user')->findOrFail($id)
       );
     }
 
@@ -88,7 +89,7 @@ class AddressController extends Controller
 
       $address->update($request->all());
 
-      return response()->json($address);
+      return new AddressResource($address);
     }
 
     /**

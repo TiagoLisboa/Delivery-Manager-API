@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Delivery;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\DeliveryResource;
 
 class DeliveryController extends Controller
 {
@@ -15,8 +16,8 @@ class DeliveryController extends Controller
      */
     public function index()
     {
-      return response()->json(
-        Delivery::with('carrier', 'receiver', 'pickup_address', 'delivery_address')->get()
+      return DeliveryResource::collection(
+        Delivery::with('carrier', 'receiver', 'pickup_address', 'delivery_address')->paginate(25)
       );
     }
 
@@ -45,7 +46,7 @@ class DeliveryController extends Controller
 
       $delivery = Delivery::create($request->all());
 
-      return response()->json($delivery);
+      return new DeliveryResource($delivery);
     }
 
     /**
@@ -56,7 +57,7 @@ class DeliveryController extends Controller
      */
     public function show($id)
     {
-      return response()->json(
+      return new DeliveryResource(
         Delivery::with('carrier', 'receiver', 'pickup_address', 'delivery_address')->findOrFail($id)
       );
     }
@@ -87,7 +88,7 @@ class DeliveryController extends Controller
 
       $delivery->update($request->all());
 
-      return response()->json($delivery);
+      return new DeliveryResource($delivery);
     }
 
     /**
