@@ -83,4 +83,32 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 * copy .env.example to .env in the project root
 * generate jwt secret key with ```php artisan jwt:secret```
 * run ```php artisan serve``` to start the server
-* make the api calls at http://localhost:8000/api
+* make the API calls at http://localhost:8000/api
+
+# API documentation
+Most of this routes expect a bearer token in the header of the request. To get a token either by login at **/login** route or by registing at **/register**.
+
+This are API routes and their expected responses.
+
+## auth routes
+This routes are used for authentication.
+
+* POST /login receives "email" and a "password" as json and returns JWT information.
+* POST /register receives "name", "email" and "password" as json, register an new user and returns JWT information.
+
+## /addresses
+* GET returns a list of addresses
+* GET {id} returns a single address
+* POST receives "address", "neighborhood", "complemento", "city", "state", "CEP", "user_id" as json and register a new address
+* PUT {id} receives "address", "neighborhood", "complemento", "city", "state", "CEP", "user_id" as json and updates a registered address
+* DELETE {id} deletes an address (only the ones not used in a delivery)
+
+## /deliveries
+* GET returns a list of deliveries
+* GET {id} returns a single delivery
+* POST receives "delivery", "receiver_id", "carrier_id", "delivery_address_id", "pickup_address_id", "delivery_term" as json and register a new delivery
+* PUT {id} receives "delivery", "receiver_id", "carrier_id", "delivery_address_id", "pickup_address_id", "delivery_term" as json and updates a registered delivery
+* DELETE {id} deletes a delivery
+
+## /cep/{cep number}
+This route only responds to a get request, and returns all the address information related with that cep from [BrasilAPI](https://github.com/filipedeschamps/BrasilAPI). The function of this route is to be used to complete address information in forms using this API.
