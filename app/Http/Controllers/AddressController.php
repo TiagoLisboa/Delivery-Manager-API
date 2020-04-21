@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Delivery;
+use App\Address;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class DeliveryController extends Controller
+class AddressController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,11 +16,11 @@ class DeliveryController extends Controller
     public function index()
     {
       return response()->json(
-        Delivery::with('carrier', 'receiver', 'pickup_address', 'delivery_address')->get()
+        Address::with('user')->get()
       );
     }
 
-   /**
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -29,12 +29,12 @@ class DeliveryController extends Controller
     public function store(Request $request)
     {
       $validator = Validator::make($request->all(), [
-        'delivery' => 'required',
-        'receiver_id' => 'required|exists:users,id',
-        'carrier_id' => 'required|exists:users,id',
-        'delivery_address_id' => 'required|exists:addresses,id',
-        'pickup_address_id' => 'required|exists:addresses,id',
-        'delivery_term' => 'required|date',
+        'address' => 'required',
+        'neighborhood' => 'required',
+        'city' => 'required',
+        'state' => 'required',
+        'CEP' => 'required',
+        'user_id' => 'required|exists:users,id',
       ]);
 
       if ($validator->fails()) {
@@ -43,21 +43,22 @@ class DeliveryController extends Controller
         return response()->json($errors, 400);
       }
 
-      $delivery = Delivery::create($request->all());
+      $address = Address::create($request->all());
 
-      return response()->json($delivery);
+      return response()->json($address);
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Delivery  $delivery
+     * @param  \App\Address  $address
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
       return response()->json(
-        Delivery::with('carrier', 'receiver', 'pickup_address', 'delivery_address')->findOrFail($id)
+        Address::with('user')->find($id)
       );
     }
 
@@ -65,18 +66,18 @@ class DeliveryController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Delivery  $delivery
+     * @param  \App\Address  $address
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Delivery $delivery)
+    public function update(Request $request, Address $address)
     {
       $validator = Validator::make($request->all(), [
-        'delivery' => 'required',
-        'receiver_id' => 'required',
-        'carrier_id' => 'required',
-        'delivery_address_id' => 'required',
-        'pickup_address_id' => 'required',
-        'delivery_term' => 'required|date',
+        'address' => 'required',
+        'neighborhood' => 'required',
+        'city' => 'required',
+        'state' => 'required',
+        'CEP' => 'required',
+        'user_id' => 'required|exists:users,id',
       ]);
 
       if ($validator->fails()) {
@@ -85,21 +86,21 @@ class DeliveryController extends Controller
         return response()->json($errors, 400);
       }
 
-      $delivery->update($request->all());
+      $address->update($request->all());
 
-      return response()->json($delivery);
+      return response()->json($address);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Delivery  $delivery
+     * @param  \App\Address  $address
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Delivery $delivery)
+    public function destroy(Address $address)
     {
-      $delivery->delete();
+      $address->delete();
 
-      return response()->json("Delivery deleted successfully.", 200);
+      return response()->json("Address deleted successfully.", 200);
     }
 }
