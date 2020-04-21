@@ -44,4 +44,8 @@ class User extends Authenticatable
     public function toDelivery() {
       return $this->hasMany('App\Delivery', 'carrier_id');
     }
+
+    public function addresses() {
+      return $this->hasMany('App\Address');
+    }
 }

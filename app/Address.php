@@ -12,6 +12,11 @@ class Address extends Model
     'neighborhood',
     'city',
     'state',
-    'CEP'
+    'CEP',
+    'user_id'
   ];
+
+  public function user() {
+    return $this->belongsTo('App\User');
+  }
 }

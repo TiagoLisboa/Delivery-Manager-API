@@ -25,6 +25,8 @@ class CreateDeliveryTable extends Migration
 
             $table->foreign('receiver_id')->references('id')->on('users');
             $table->foreign('carrier_id')->references('id')->on('users');
+            $table->foreign('delivery_address_id')->references('id')->on('addresses');
+            $table->foreign('pickup_address_id')->references('id')->on('addresses');
         });
     }
 
