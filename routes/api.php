@@ -18,5 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('deliveries', 'DeliveryController');
-Route::resource('addresses', 'AddressController');
+Route::apiResource('deliveries', 'DeliveryController');
+Route::apiResource('addresses', 'AddressController');
+
+Route::get('cep/{cep}', 'CepController@show');
