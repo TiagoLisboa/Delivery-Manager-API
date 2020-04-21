@@ -15,19 +15,19 @@ class Delivery extends Model
     'delivery_term',
   ];
 
-  function receiver() {
+  public function receiver() {
     return $this->belongsTo('App\User');
   }
 
-  function carrier() {
+  public function carrier() {
     return $this->belongsTo('App\User');
   }
 
-  function delivery_address () {
+  public function delivery_address () {
     return $this->belongsTo('App\Address');
   }
 
-  function pickup_address () {
+  public function pickup_address () {
     return $this->belongsTo('App\Address');
   }
 }
