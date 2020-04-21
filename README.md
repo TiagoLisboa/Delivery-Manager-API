@@ -79,6 +79,8 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
 # Instalation
-* copy .env
-* configure sqlite
-* configure jwt
+* run ```composer install```
+* copy .env.example to .env in the project root
+* generate jwt secret key with ```php artisan jwt:secret```
+* run ```php artisan serve``` to start the server
+* make the api calls at http://localhost:8000/api
